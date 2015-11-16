@@ -1,0 +1,254 @@
+<!DOCTYPE html><html><head><title>DataLoader Command-Line Interface</title><meta charset='utf-8'><link href='main.css' rel='stylesheet'></head><body><div id='preview-contents' class='note-content'>
+                        <div id="wmd-preview" class="preview-content"></div>
+                    <div class="wmd-preview-section preview-content" id="wmd-preview-section-52462"></div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52464">
+
+<h1 id="dataloader-command-line-interface">DataLoader Command-Line Interface</h1>
+
+<p></p>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52465">
+
+<h3 id="data-loader-是一个批量数据导入导出的客户端应用使用它可以对sf数据记录进行插入更新删除和导出"><strong>Data Loader</strong> <span style="font-size:16px;font-weight:normal;line-height:16px;">是一个批量数据导入导出的<code>客户端</code>应用，使用它可以对SF数据记录进行插入、更新、删除和导出.</span></h3>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52466">
+
+<h5 id="数据操作">数据操作</h5>
+
+<ul><li>当进行数据导入时，DataLoader从文件或者数据库中 读取并加载数据</li>
+<li>当进行数据导出时，DataLoader输出 CSV文件 或者导入到 数据库 中</li>
+</ul>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52467">
+
+<h5 id="使用方式">使用方式</h5>
+
+<ul><li><del style="color:gray"><i>用户接口GUI</i></del></li>
+<li>命令行(Windows only)</li>
+</ul>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52468">
+
+<h5 id="数据源">数据源</h5>
+
+<ul><li>数据文件（CSV文件）</li>
+<li>数据库（Command only）</li>
+</ul>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52469">
+
+<dl>
+<dt>命令行接口</dt>
+<dd>
+<p><strong>简述</strong></p>
+
+<blockquote  style="width: 869px;">
+  <p>当使用<code>命令行</code>时，你需要配置<strong>数据源</strong>和<strong>数据映射关系</strong>以及<strong>操作</strong>，以便设置数据并加载程序进行自动处理。 <br>
+  <em><span style="color:gray;font-size:14px"> 该配置可以通过DataLoader GUI来进行设置。</span></em></p>
+</blockquote>
+</dd>
+
+<dd>
+<p><strong>1.安装目录文件结构</strong></p>
+</dd>
+</dl>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52470" style="width: 829px;margin-left: 80px;">
+
+<pre class="prettyprint hljs-dark"><code class="language-Bash hljs r">fore.com<br>  └─Data Loader [主目录]<br>      ├─bin [batch命令文件]<br>      │  ├─▬▬▬encrypt.bat<br>      │  └─▬▬▬process.bat<br>      ├─▬▬▬dataloader-<span class="hljs-number">33.0</span><span class="hljs-number">.0</span>-uber.jar<br>      ├─Java [java工作目录]<br>      │  ├─bin<br>      │  │  ├─▬▬▬<span class="hljs-keyword">...</span><br>      │  │  ├─▬▬▬java.exe<br>      │  │  └─▬▬▬<span class="hljs-keyword">...</span><br>      │  ├─Data<br>      │  ├─lib<br>      │  │  ├─▬▬▬<span class="hljs-keyword">...</span><br>      │  │  ├─▬▬▬rt.jar<br>      │  │  └─▬▬▬<span class="hljs-keyword">...</span><br>      │  └─Other<br>      ├─licenses<br>      └─samples [配置样本目录]<br>          ├─conf [配置文件目录]<br>          │  ├─▬▬▬database-conf.xml<br>          │  ├─▬▬▬process-conf.xml<br>          │  └─▬▬▬opportunityInsertMap.sdl<br>          ├─data [数据源目录]<br>          │  └─▬▬▬opportunityData.csv<br>          └─status [日志目录]<br>              └─▬▬▬success0413060133.csv<br></code></pre>
+<dd>定制后的目录结构如下:</dd>
+<img src="dir.png">
+<dl>
+<dt>&nbsp;</dt>
+<dd><strong>2.设计流程</strong></dd>
+
+<dd><span style="font-size:15px;">配置DataLoader，创建<code>process-Xxx.bat</code>批处理文件</span>
+</dd>
+
+<dd><span style="font-size:15px;">添加任务<code>脚本</code>到Windows执行任务计划</span>
+</dd>
+
+<dd><span style="font-size:15px;">运行batch并备份数据文件，有异常则发送邮件通知</span>
+</dd>
+
+<dt>&nbsp;</dt>
+<dd>
+<p><strong>3.用户系统配置</strong></p>
+
+<ol><li rel="1"><span style="font-size:15px;">复制<code>sample/conf</code>到主目录<code>Data Loader</code>中</span></li>
+<li rel="2"><span style="font-size:15px;">创建配置文件<code>config.properties</code>并进行编辑如下</span></li>
+</ol>
+</dd>
+</dl>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52471" style="width: 729px;margin-left:140px;">
+
+<pre class="prettyprint hljs-dark"><code class="language-xml hljs">sfdc.endpoint=https://test.salesforce.com<br>sfdc.username=boxadmin@natr.com.box<br>sfdc.password=aae9e2c86792c848fd3107685cabd3d6<br></code></pre>
+<div style="margin-left:0px;">
+  <img src="gui2.png">
+</div>
+<dl>
+<dt>&nbsp;</dt>
+<dd style="margin-left: 0px;"><code>sfdc.password</code><span style="font-size:15px;">获取方法为进入<code>bin</code>目录中执行以下命令</span> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:15px;"></span>
+</dd>
+</dl>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52472">
+
+<pre class="prettyprint hljs-dark" style="width: 729px;margin-left:140px;"><code class="language-bash hljs">bin&gt; encrypt <span class="hljs-operator">-e</span> password<br></code></pre>
+<div style="margin-left:140px;">
+  <img src="encrypt.png">
+</div>
+
+<dl>
+<dt>&nbsp;</dt>
+<dd><strong>4.批操作核心配置</strong><br></dd>
+
+<dd>
+<ul><li><span style="font-size:15px;">打开<code>process-conf.xml</code>文件编辑配置</span></li>
+</ul>
+</dd>
+</dl>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52557">
+
+<pre class="prettyprint hljs-dark" style="width: 800px;margin-left:70px;"><code class="language-xml hljs"><span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"SObjectOperation"</span><br>          <span class="hljs-attribute">class</span>=<span class="hljs-value">"com.salesforce.dataloader.process.ProcessRunner"</span><br>          <span class="hljs-attribute">singleton</span>=<span class="hljs-value">"false"</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">description</span>&gt;</span>updates or inserts or upsert data into SFDC from csv local file."<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"name"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"SObjectInsert"</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"configOverrideMap"</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-title">map</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"sfdc.entity"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"SObject"</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"process.operation"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Operation"</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"process.mappingFile"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"SObjectOperation.sdl"</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"dataAccess.name"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"SObject_Operation.csv"</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"process.outputSuccess"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"SObject_Operation_Success.csv"</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"process.outputError"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"SObject_Operation_Error.csv"</span>/&gt;</span><br>                <span class="hljs-comment">&lt;!-- &lt;entry key="" value=""/&gt; --&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-title">map</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span><br></code></pre>
+<br>
+<pre class="prettyprint hljs-dark" style="width: 800px;margin-left:70px;">
+  <span>具体例子</span>
+  <code class="language-xml hljs"><span class="hljs-doctype">&lt;!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd"&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-title">beans</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- batch文件process目标名称[id] --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"Bonus_Bal__c_Insert"</span><br>          <span class="hljs-attribute">class</span>=<span class="hljs-value">"com.salesforce.dataloader.process.ProcessRunner"</span><br>          <span class="hljs-attribute">singleton</span>=<span class="hljs-value">"false"</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">description</span>&gt;</span>[请在此处填写关于该操作的描述]."<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"name"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Bonus_Bal__cInsert"</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"configOverrideMap"</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-title">map</span>&gt;</span><br>                <span class="hljs-comment">&lt;!-- 操作实体SObject对象 --&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"sfdc.entity"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"Bonus_Bal__c"</span>/&gt;</span><br>                <span class="hljs-comment">&lt;!-- 操作类型insert,update,upsert --&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"process.operation"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"insert"</span>/&gt;</span><br>                <span class="hljs-comment">&lt;!-- SFDC-CSV字段映射配置 --&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"process.mappingFile"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"../conf/map/Bonus_Bal__c_Insert.sdl"</span>/&gt;</span><br>                <span class="hljs-comment">&lt;!-- 数据源文件 --&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"dataAccess.name"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"../data/Bonus_Bal__c_Insert.csv"</span>/&gt;</span><br>                <span class="hljs-comment">&lt;!-- 成功日志文件 --&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"process.outputSuccess"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"../data/work/Bonus_Bal__c_Insert/Bonus_Bal__c_Insert_Success.csv"</span>/&gt;</span><br>                <span class="hljs-comment">&lt;!-- 失败日志文件 --&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"process.outputError"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"../data/work/Bonus_Bal__c_Insert/Bonus_Bal__c_Insert_Error.csv"</span>/&gt;</span><br>                <span class="hljs-comment">&lt;!-- &lt;entry key="" value=""/&gt; --&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-title">map</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-title">beans</span>&gt;</span><br></code>
+</pre>
+<div style="margin-left:70px;">
+<span><code>process.operation</code>对应的图形界面</span>
+<br>
+  <img src="gui1.png">
+</div>
+<dl>
+<dt>&nbsp;</dt>
+<dd>
+<ul><li><span style="font-size:15px;">字段列映射配置</span> <br>
+<span style="font-size:14px;">复制<code>conf</code>中文件<code>opportunityInsertMap.sdl</code>编辑并进行重命名</span></li>
+</ul>
+</dd>
+
+<dd style="margin-left: 80px;">
+<table>
+<thead>
+<tr>
+  <th align="left"><span style="font-size:14px;">数据流向</span></th>
+  <th align="right"><span style="font-size:14px;">配置原则 </span></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left"><span style="font-size:14px;">数据流向为CSV到SFDC</span></td>
+  <td align="right"><span style="font-size:14px;">csv列字段名=SFDC字段API名</span></td>
+</tr>
+<tr>
+  <td align="left"><span style="font-size:14px;">数据流向从SFDC到CSV</span></td>
+  <td align="right"><span style="font-size:14px;">csv列字段名=SFDC字段API名</span></td>
+</tr>
+</tbody></table>
+
+
+<p><i style="font-size:14px;color:gray;">*该配置中勿要出现中文字符,该配置为增量配置</i></p>
+</dd>
+
+<dd><strong>5.邮件发送配置</strong></dd>
+
+<dd>
+<blockquote style="width: 980px;">
+  <p><span style="font-size:15px;">邮件是使用SendEmail程序对其命令行进行操作，详见<a target="_blank" href="http://caspian.dotconf.net/menu/Software/SendEmail/">sendEmail</a>官网</span></p>
+</blockquote>
+</dd>
+
+<dd>
+<ul><li><span style="font-size:15px;">邮件<strong>模板</strong>配置</span> <br>
+<span style="font-size:15px;">在上述邮件程序目录中的文件<code>mail</code>为邮件模板，使用文本编辑器打开即可修改（注，其中的${}部分请勿修改），注意格式必须符合HTML规范</span></li>
+</ul>
+</dd>
+<div style="margin-left:80px;">
+  <strong>邮件效果如下：</strong>
+  <br>
+  <img src="mail1.png">
+  <br>
+  <img src="mail2.png">
+</div>
+
+<dd>
+<ul><li><span style="font-size:15px;">邮件<strong>程序</strong>配置</span> <br>
+<span style="font-size:15px;">邮件调用程序为邮件命令目录下的<code>sendMail.bat</code>文件，使用文本编辑器进行编辑，如下</span></li>
+</ul>
+</dd>
+</dl></div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52474">
+
+<pre class="prettyprint hljs-dark" style="width: 800px;margin-left:70px;"><code class="language-bash hljs">sendEmail -o message-charset=<span class="hljs-string">"utf-8"</span> ^<br>          -o tls=yes ^<br>          -o message-content-type=html ^<br>          -o message-header=<span class="hljs-string">"X-Priority: 1"</span> ^<br>          <span class="hljs-operator">-f</span> <span class="hljs-string">"DataLoader&lt;your_mail_account@163.com&gt;"</span> ^<br>          -t jony.fang@celnet.com.cn ^<br>          <span class="hljs-operator">-s</span> smtp.<span class="hljs-number">163</span>.com ^<br>          -o username=your_mail_account@<span class="hljs-number">163</span>.com ^<br>          -o password=mailPassword ^<br>          -u <span class="hljs-string">"DataLoader数据导入异常"</span> ^<br>          -o message-file=%<span class="hljs-number">1</span> ^<br>          <span class="hljs-operator">-a</span> %<span class="hljs-number">2</span> %<span class="hljs-number">3</span> %<span class="hljs-number">4</span><br></code></pre>
+
+<dl>
+<dt>&nbsp;</dt>
+<dd>
+<p><span style="font-size:15px;">其中，主要配置参数为</span></p>
+</dd>
+
+<dd><span style="font-size:15px;"><code>-f "DataLoader&lt;发送方邮箱地址&gt;"</code> &nbsp;&nbsp;此处填入发送方邮箱地址</span></dd>
+
+<dd><span style="font-size:15px;"><code>-t [接收方邮箱地址]</code> &nbsp;&nbsp;此处填写接收方邮箱地址</span></dd>
+
+<dd><span style="font-size:15px;"><code>-s [发送方邮箱服务器地址]</code> &nbsp;&nbsp;此处填入发送方邮箱服务器地址 (<i style="color:gray;">如163邮箱服务器地址为smtp.163.com</i>)</span></dd>
+
+<dd><span style="font-size:15px;"><code>-o username=[发送方邮箱地址]</code><br><code>-o password=[发送方邮箱密码]</code></span></dd>
+
+<dd><span style="font-size:15px;">上面两处为发送方邮箱用户名和密码</span></dd>
+
+<dd><span style="font-size:15px;color:gray;"> <br>
+*如果需要发送多个用户，请进入<strong>sendEmail官网</strong>查看用法 <br>
+*在任务批处理文件中，调用该sendMail程序用法如下 <br>
+<code>sendMail.bat mail Insert.csv Error.csv log.txt</code> <br>
+其中该命名的四个参数依次为发送的邮件文件、数据源，错误日志文件和控制台日志文件 <br>
+</span></dd>
+</dl>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52475">
+
+<dl>
+<dt>&nbsp;</dt>
+<dd>
+<p><strong>6.批处理文件配置</strong></p>
+
+<blockquote style="width: 980px;">
+  <p>批处理文件对应每个SObject每一种操作，如Account的insert（导入）对应着一个bat文件，在<code>Windows</code>的 <strong>任务计划</strong>中对应一个任务 </p>
+</blockquote>
+</dd>
+
+<dd>
+<ul><li><span style="font-size:15px；">创建一个batch文件，编写程序如下：</span></li>
+</ul>
+</dd>
+</dl>
+
+</div><div class="wmd-preview-section preview-content" id="wmd-preview-section-52476">
+
+<pre class="prettyprint hljs-dark" style="width: 980px;margin-left:40px;"><code class="language-batch hljs dos">    @<span class="hljs-keyword">echo</span> off<br><br>    <span class="hljs-comment">REM 配置该任务的工作目录，如果不存在则创建</span><br>    <span class="hljs-keyword">set</span> WORK_DIR=..\data\work\Bonus_Bal__c_Insert<br>    <span class="hljs-flow">if</span> <span class="hljs-flow">exist</span> <span class="hljs-envvar">%WORK_DIR%</span> ( <br>    <span class="hljs-keyword">echo</span> "Directory is <span class="hljs-flow">exist</span>" <br>     ) <span class="hljs-flow">else</span> ( <br>        <span class="hljs-keyword">echo</span> "make the directory"<br>        <span class="hljs-built_in">md</span> <span class="hljs-envvar">%WORK_DIR%</span><br>     )<br><br>    <span class="hljs-comment">REM set process name</span><br>    <span class="hljs-keyword">set</span> PROCESS_OPTION=process.name=Bonus_Bal__c_Insert<br><br>    <span class="hljs-comment">REM 执行数据操作</span><br>    ..\Java\bin\java.exe -cp ..\dataloader-uber.jar -Dsalesforce.config.<span class="hljs-built_in">dir</span>=../conf com.salesforce.dataloader.process.ProcessRunner <span class="hljs-envvar">%PROCESS_OPTION%</span> &gt; <span class="hljs-envvar">%WORK_DIR%</span>/log.txt<br><br>    <span class="hljs-comment">REM 设置备份文件夹名称</span><br>    <span class="hljs-keyword">set</span> bakDir=<span class="hljs-envvar">%date:~0,4%</span><span class="hljs-envvar">%date:~5,2%</span><span class="hljs-envvar">%date:~8,2%</span><span class="hljs-envvar">%time:~0,2%</span><span class="hljs-envvar">%time:~3,2%</span><span class="hljs-envvar">%time:~6,2%</span><br>    ::<span class="hljs-built_in">pause</span><br><br>    <span class="hljs-comment">REM 创建备份文件夹</span><br>    <span class="hljs-built_in">mkdir</span> ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert<br><br>    <span class="hljs-comment">REM 复制源数据文件和日志文件到备份文件夹下</span><br>    @<span class="hljs-keyword">copy</span> ..\data\Bonus_Bal__c_Insert.csv ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert<br>    @<span class="hljs-keyword">copy</span> ..\data\work\Bonus_Bal__c_Insert ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert<br><br>    <span class="hljs-comment">REM 分析错误1 by log file</span><br>    <span class="hljs-built_in">findstr</span> /C:"doneSuccess" ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert\log.txt<br>    <span class="hljs-keyword">set</span> isSuccess = <span class="hljs-envvar">%errorlevel%</span><br>    <span class="hljs-built_in">findstr</span> /C:"The operation has fully completed." ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert\log.txt<br>    <span class="hljs-keyword">set</span> isSuccess2 = <span class="hljs-envvar">%errorlevel%</span><br>    <span class="hljs-flow">if</span> isSuccess <span class="hljs-operator">EQU</span> <span class="hljs-number">0</span> <span class="hljs-flow">if</span> isSuccess2 <span class="hljs-operator">EQU</span> <span class="hljs-number">0</span>(::sucess then get get related info<br>        <span class="hljs-keyword">echo</span> "处理完成……"<br>        <span class="hljs-flow">goto</span> csvAnalysis<br>    ) <span class="hljs-flow">else</span> (<br>        <span class="hljs-flow">goto</span> sendMail<br>    )<br><br>    :csvAnalysis<br>    <span class="hljs-comment">REM find isError by csv log file</span><br>    <span class="hljs-flow">for</span> /f <span class="hljs-envvar">%%a</span> <span class="hljs-flow">in</span> (' <span class="hljs-built_in">find</span> /c /v "" ^&lt;..\data\work\Bonus_Bal__c_Insert\Bonus_Bal__c_Insert_Error.csv ') <span class="hljs-flow">do</span> (<span class="hljs-keyword">set</span> n=<span class="hljs-envvar">%%a</span> ) <br>    <span class="hljs-flow">IF</span> <span class="hljs-envvar">%n%</span> <span class="hljs-operator">GTR</span> <span class="hljs-number">1</span> (<span class="hljs-flow">goto</span> sendMail) <span class="hljs-flow">ELSE</span> <span class="hljs-flow">goto</span> end<br><br>    <span class="hljs-comment">REM 发送异常邮件通知</span><br>    :sendMail<br>    <span class="hljs-comment">REM 复制邮件模板</span><br>    @<span class="hljs-keyword">copy</span> ..\mail\mail ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert<br>    <span class="hljs-comment">REM 生成邮件</span><br>    "..\Java\bin\java" -classpath ..\bin EmailGen ^<br>    ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert\mail ^<br>    ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert\mail2 ^<br>    用户 "Insert" Bonus_Bal__c ^<br>    <span class="hljs-envvar">%bakDir:~0,4%</span>年<span class="hljs-envvar">%bakDir:~4,2%</span>月<span class="hljs-envvar">%bakDir:~6,2%</span>号^&amp;nbsp;<span class="hljs-envvar">%bakDir:~8,2%</span>时<span class="hljs-envvar">%bakDir:~10,2%</span>分<span class="hljs-envvar">%bakDir:~12,2%</span>秒 ^<br>    Bonus_Bal__c_Insert.csv ^<br>    Bonus_Bal__c_Insert_Error.csv  ^<br>    log.txt  ^<br>    <span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert<br>    <span class="hljs-comment">REM delete</span><br>    <span class="hljs-winutils">del</span> ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert\mail<br>    <span class="hljs-winutils">ren</span> ..\backup\<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert\mail2 mail<br><br>    <span class="hljs-comment">REM 发送邮件通知</span><br>    <span class="hljs-built_in">cd</span> ..<br>    bin\sendMail.bat ^<br>    backup/<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert/mail ^<br>    backup/<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert/Bonus_Bal__c_Insert.csv ^<br>    backup/<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert/Bonus_Bal__c_Insert_Error.csv ^<br>    backup/<span class="hljs-envvar">%bakDir%</span>-Bonus_Bal__c_Insert/log.txt<br><br>    <span class="hljs-flow">exit</span><br><br>    :end<br>    <span class="hljs-keyword">echo</span> data process done<br>    <span class="hljs-flow">exit</span><br></code></pre>
+
+<dl>
+<dt>&nbsp;</dt>
+<dd><strong>7.添加batch到任务</strong></dd>
+
+<dd><span style="font-size:15px;">在<code>Windows</code>中的<strong>任务计划程序</strong>中设定执行脚本（processXXX.bat）和执行频率</span> <br>
+<span>打开计划任务程序</span>
+<img src="schedule1.png">
+  <span>如图所示，进行一步步操作</span>
+  <img src="task1.png">
+  <img src="task2.png">
+  <img src="task3.png">
+  <img src="task4.png">
+  <img src="task5.png">
+  <img src="task6.png">
+</dd>
+</dl>
+<dt>参考资料：</dt>
+  <span style="font-size:15px;"><code><a target="_blank" href="http://login.salesforce.com/help/pdfs/en/salesforce_data_loader.pdf">salesforce_data_loader.pdf</a></code></span>
+  <br>
+  <span style="font-size:15px;"><code><a target="_blank" href="http://www.salesforcetutorial.com/salesforce-data-loader/" >Salesforce Data Loader - SalesforceTutorial</a></code></span>
+<hr>
+
+<p><i style="color:gray;font-size:12px;float:right;">Powered by celnet</i></p></div><div class="preview-content" id="wmd-preview-section-footnotes"></div></div></body></html>
